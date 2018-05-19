@@ -37,10 +37,11 @@ npm run bench
 ```
 
 ```
-benchDeepCopy*100: 624.535ms
-benchLodashCloneDeep*100: 1740.670ms
-benchRfdc*100: 547.896ms
-benchRfdcProto*100: 467.896ms
+benchDeepCopy*100: 639.536ms
+benchLodashCloneDeep*100: 1724.347ms
+benchFastCopy*100: 905.749ms
+benchRfdc*100: 567.140ms
+benchRfdcProto*100: 478.072ms
 ```
 
 ### Tests
@@ -50,7 +51,7 @@ npm test
 ```
 
 ```
-52 passing (287.896ms)
+62 passing (293.154ms)
 ```
 
 #### Coverage

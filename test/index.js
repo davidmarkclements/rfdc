@@ -18,6 +18,14 @@ test('function', async ({is}) => {
   const fn = () => {}
   is(clone(fn), fn, 'same function')
 })
+test('async function', async ({is}) => {
+  const fn = async () => {}
+  is(clone(fn), fn, 'same function')
+})
+test('generator function', async ({is}) => {
+  const fn = function * () {}
+  is(clone(fn), fn, 'same function')
+})
 test('date', async ({is, isNot}) => {
   const date = new Date()
   is(+clone(date), +date, 'same value')
@@ -62,6 +70,14 @@ test('nested function', async ({is}) => {
   const fn = () => {}
   is(clone({fn}).fn, fn, 'same function')
 })
+test('nested async function', async ({is}) => {
+  const fn = async () => {}
+  is(clone({fn}).fn, fn, 'same function')
+})
+test('nested generator function', async ({is}) => {
+  const fn = function * () {}
+  is(clone({fn}).fn, fn, 'same function')
+})
 test('nested date', async ({is, isNot}) => {
   const date = new Date()
   is(+clone({d: date}).d, +date, 'same value')
@@ -87,6 +103,14 @@ test('proto option – boolean', async ({is}) => {
 })
 test('proto option – function', async ({is}) => {
   const fn = () => {}
+  is(cloneProto(fn), fn, 'same function')
+})
+test('proto option – async function', async ({is}) => {
+  const fn = async () => {}
+  is(cloneProto(fn), fn, 'same function')
+})
+test('proto option – generator function', async ({is}) => {
+  const fn = function * () {}
   is(cloneProto(fn), fn, 'same function')
 })
 test('proto option – date', async ({is, isNot}) => {
@@ -133,6 +157,14 @@ test('proto option – nested function', async ({is}) => {
   const fn = () => {}
   is(cloneProto({fn}).fn, fn, 'same function')
 })
+test('proto option – nested async function', async ({is}) => {
+  const fn = async () => {}
+  is(cloneProto({fn}).fn, fn, 'same function')
+})
+test('proto option – nested generator function', async ({is}) => {
+  const fn = function * () {}
+  is(cloneProto({fn}).fn, fn, 'same function')
+})
 test('proto option – nested date', async ({is, isNot}) => {
   const date = new Date()
   is(+cloneProto({d: date}).d, +date, 'same value')
@@ -140,4 +172,11 @@ test('proto option – nested date', async ({is, isNot}) => {
 })
 test('proto option – nested null', async ({is}) => {
   is(cloneProto({n: null}).n, null, 'same value')
+})
+test('arguments', async ({isNot, same}) => {
+  function fn (...args) {
+    same(clone(arguments), args, 'same values')
+    isNot(clone(arguments), arguments, 'different object')
+  }
+  fn(1, 2, 3)
 })
