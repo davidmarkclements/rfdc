@@ -1,6 +1,6 @@
 {
   "name": "rfdc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Really Fast Deep Clone",
   "main": "index.js",
   "scripts": {
