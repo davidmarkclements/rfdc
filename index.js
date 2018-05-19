@@ -4,7 +4,7 @@ module.exports = rfdc
 function rfdc (opts) {
   opts = opts || {}
   const proto = opts.proto || false
-  const refs = new Set()
+  const refs = new WeakSet()
   return proto ? cloneProto : clone
 
   function clone (o) {
