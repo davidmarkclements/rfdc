@@ -27,7 +27,7 @@ require('rfdc')({ proto: true })(Object.create({a: 1})) // => {a: 1}
 ``` 
 
 If this behavior is acceptable, set
-`proto` to `true` for an additional 25% performance boost
+`proto` to `true` for an additional 15% performance boost
 (see benchmarks).
 
 ### Benchmarks
