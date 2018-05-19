@@ -1,0 +1,122 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": {
+      "name": "WebInspector",
+      "version": "537.36"
+    },
+    "pages": [
+      {
+        "startedDateTime": "2015-02-10T07:33:17.146Z",
+        "id": "page_1",
+        "title": "http://mockbin.com/",
+        "pageTimings": {
+          "onContentLoad": 627.4099349975586,
+          "onLoad": 1266.5300369262695
+        }
+      }
+    ],
+    "entries": [
+      {
+        "startedDateTime": "2015-02-10T07:33:17.146Z",
+        "time": 181.59985542297363,
+        "request": {
+          "method": "GET",
+          "url": "http://mockbin.com/",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "DNT",
+              "value": "1"
+            },
+            {
+              "name": "Accept-Encoding",
+              "value": "gzip, deflate, sdch"
+            },
+            {
+              "name": "Host",
+              "value": "mockbin.com"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "queryString": [],
+          "cookies": [
+            {
+              "name": "foo",
+              "expires": "2015-02-10T07:33:17.146Z",
+              "value": "bar",
+              "httpOnly": false,
+              "secure": false
+            }
+          ],
+          "headersSize": 482,
+          "bodySize": 0
+        },
+        "response": {
+          "status": 200,
+          "statusText": "OK",
+          "httpVersion": "HTTP/1.1",
+          "headers": [
+            {
+              "name": "X-Response-Time",
+              "value": "3.419ms"
+            },
+            {
+              "name": "Date",
+              "value": "Tue, 10 Feb 2015 07:33:16 GMT"
+            },
+            {
+              "name": "Vary",
+              "value": "Accept, Accept-Encoding"
+            },
+            {
+              "name": "X-Powered-By",
+              "value": "mockbin.com"
+            },
+            {
+              "name": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/html; charset=utf-8"
+            },
+            {
+              "name": "Content-Encoding",
+              "value": "gzip"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookies": [],
+          "content": {
+            "size": 30,
+            "mimeType": "text/html",
+            "compression": 0,
+            "text": "ALL YOUR BASE ARE BELONG TO US"
+          },
+          "redirectURL": "",
+          "headersSize": 430,
+          "bodySize": 30
+        },
+        "cache": {},
+        "timings": {
+          "blocked": 0.381000001652865,
+          "dns": -1,
+          "connect": -1,
+          "send": 0.05899999996472599,
+          "wait": 179.1829999983744,
+          "receive": 1.9768554229816289,
+          "ssl": -1
+        },
+        "connection": "161767",
+        "pageref": "page_1"
+      }
+    ]
+  }
+}
