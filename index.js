@@ -4,7 +4,8 @@ module.exports = rfdc
 function rfdc (opts) {
   opts = opts || {}
   const proto = opts.proto || false
-
+  const complex = opts.complex || false
+  const refs = new WeakSet()
   return proto ? cloneProto : clone
 
   function clone (o) {
@@ -12,6 +13,7 @@ function rfdc (opts) {
     if (type === 'function') return o
     if (o === null || type !== 'object') return o
     if (o instanceof Date) return new Date(o)
+    refs.add(o)
     const o2 = Array.isArray(o) ? new Array(o.length) : {}
     for (var k in o) {
       if (Object.hasOwnProperty.call(o, k) === false) continue
@@ -29,7 +31,8 @@ function rfdc (opts) {
           o2[k] = new Date(cur)
           continue
         }
-        o2[k] = clone(cur)
+        if (refs.has(cur)) o2[k] = o2 
+        else o2[k] = clone(cur)
         continue
       }
       o2[k] = cur
@@ -43,7 +46,8 @@ function rfdc (opts) {
     if (type === 'function') return o
     if (o === null || type !== 'object') return o
     if (o instanceof Date) return new Date(o)
-    const o2 = Array.isArray(o) ? new Array(o.length) : {}
+    refs.add(o)
+    const o2 = Array.isArray(o) ? new Array(o.length) : {}    
     for (var k in o) {
       var cur = o[k]
       if (typeof cur === 'function') {
@@ -59,7 +63,8 @@ function rfdc (opts) {
           o2[k] = new Date(cur)
           continue
         }
-        o2[k] = cloneProto(cur)
+        if (refs.has(cur)) o2[k] = o2 
+        else o2[k] = cloneProto(cur)
         continue
       }
       o2[k] = cur

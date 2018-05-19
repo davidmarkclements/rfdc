@@ -86,6 +86,23 @@ test('nested date', async ({is, isNot}) => {
 test('nested null', async ({is}) => {
   is(clone({n: null}).n, null, 'same value')
 })
+test('arguments', async ({isNot, same}) => {
+  function fn (...args) {
+    same(clone(arguments), args, 'same values')
+    isNot(clone(arguments), arguments, 'different object')
+  }
+  fn(1, 2, 3)
+})
+test('circular object', async ({same, is, isNot}) => {
+  const o = {nest: {a: 1, b: 2}}
+  o.circular = o
+  same(clone(o), o, 'same values')
+  isNot(clone(o), o, 'different objects')
+  isNot(clone(o).nest, o.nest, 'different nested objects')
+  const c = clone(o)
+  is(c.circular, c, 'circular references point to copied parent')
+  isNot(c.circular, o, 'circular references do not point to original parent') 
+})
 test('by default does not copy proto properties', async ({is}) => {
   is(clone(Object.create({a: 1})).a, undefined, 'value not copied')
 })
@@ -173,10 +190,10 @@ test('proto option – nested date', async ({is, isNot}) => {
 test('proto option – nested null', async ({is}) => {
   is(cloneProto({n: null}).n, null, 'same value')
 })
-test('arguments', async ({isNot, same}) => {
+test('proto option - arguments', async ({isNot, same}) => {
   function fn (...args) {
-    same(clone(arguments), args, 'same values')
-    isNot(clone(arguments), arguments, 'different object')
+    same(cloneProto(arguments), args, 'same values')
+    isNot(cloneProto(arguments), arguments, 'different object')
   }
   fn(1, 2, 3)
 })
