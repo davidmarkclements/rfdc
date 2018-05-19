@@ -21,10 +21,10 @@ test('function', async ({is}) => {
 test('date', async ({is, isNot}) => {
   const date = new Date()
   is(+clone(date), +date, 'same value')
-  isNot(clone(date), date, 'different object') 
+  isNot(clone(date), date, 'different object')
 })
 test('null', async ({is}) => {
-  is(clone(null), null, 'same value') 
+  is(clone(null), null, 'same value')
 })
 test('shallow object', async ({same, isNot}) => {
   const o = {a: 1, b: 2}
@@ -65,7 +65,7 @@ test('nested function', async ({is}) => {
 test('nested date', async ({is, isNot}) => {
   const date = new Date()
   is(+clone({d: date}).d, +date, 'same value')
-  isNot(clone({d: date}).d, date, 'different object') 
+  isNot(clone({d: date}).d, date, 'different object')
 })
 test('nested null', async ({is}) => {
   is(clone({n: null}).n, null, 'same value')
@@ -92,10 +92,10 @@ test('proto option – function', async ({is}) => {
 test('proto option – date', async ({is, isNot}) => {
   const date = new Date()
   is(+cloneProto(date), +date, 'same value')
-  isNot(cloneProto(date), date, 'different object') 
+  isNot(cloneProto(date), date, 'different object')
 })
 test('proto option – null', async ({is}) => {
-  is(cloneProto(null), null, 'same value') 
+  is(cloneProto(null), null, 'same value')
 })
 test('proto option – shallow object', async ({same, isNot}) => {
   const o = {a: 1, b: 2}
@@ -136,7 +136,7 @@ test('proto option – nested function', async ({is}) => {
 test('proto option – nested date', async ({is, isNot}) => {
   const date = new Date()
   is(+cloneProto({d: date}).d, +date, 'same value')
-  isNot(cloneProto({d: date}).d, date, 'different object') 
+  isNot(cloneProto({d: date}).d, date, 'different object')
 })
 test('proto option – nested null', async ({is}) => {
   is(cloneProto({n: null}).n, null, 'same value')

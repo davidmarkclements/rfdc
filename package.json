@@ -6,6 +6,7 @@
   "scripts": {
     "test": "tap -R min test",
     "bench": "node benchmark",
+    "lint": "standard",
     "cov": "tap --cov test",
     "cov-ui": "tap --coverage-report=html test"
   },
@@ -38,9 +39,10 @@
   "author": "David Mark Clements <david.clements@nearform.com>",
   "license": "MIT",
   "devDependencies": {
-    "fastbench": "^1.0.1",
     "deep-copy": "^1.4.2",
+    "fastbench": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
+    "standard": "^11.0.1",
     "tap": "^12.0.1"
   },
   "directories": {

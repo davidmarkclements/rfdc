@@ -22,7 +22,7 @@ var run = bench([
     }
     setImmediate(cb)
   },
-  function benchRfdc(cb) {
+  function benchRfdc (cb) {
     for (var i = 0; i < max; i++) {
       cloneDefaults(obj)
     }

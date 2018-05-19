@@ -1,20 +1,20 @@
 'use strict'
-module.exports = rfdc 
+module.exports = rfdc
 
 function rfdc (opts) {
   opts = opts || {}
   const proto = opts.proto || false
 
   return proto ? cloneProto : clone
-  
+
   function clone (o) {
-    const type = typeof o 
-    if (type === 'function') return o 
+    const type = typeof o
+    if (type === 'function') return o
     if (o === null || type !== 'object') return o
     if (o instanceof Date) return new Date(o)
     const o2 = Array.isArray(o) ? new Array(o.length) : {}
     for (var k in o) {
-      if (Object.hasOwnProperty.call(o, k) === false) continue 
+      if (Object.hasOwnProperty.call(o, k) === false) continue
       var cur = o[k]
       if (typeof cur === 'function') {
         o2[k] = cur
@@ -39,8 +39,8 @@ function rfdc (opts) {
   }
 
   function cloneProto (o) {
-    const type = typeof o 
-    if (type === 'function') return o 
+    const type = typeof o
+    if (type === 'function') return o
     if (o === null || type !== 'object') return o
     if (o instanceof Date) return new Date(o)
     const o2 = Array.isArray(o) ? new Array(o.length) : {}
@@ -67,5 +67,4 @@ function rfdc (opts) {
 
     return o2
   }
-
 }
