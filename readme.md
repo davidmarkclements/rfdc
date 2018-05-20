@@ -11,7 +11,7 @@ clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
 
 ## API
 
-### `require('rfdc')(opts = { proto: false }) => clone(obj) => obj2`
+### `require('rfdc')(opts = { proto: false, circles: false }) => clone(obj) => obj2`
 
 #### `proto` option
 
@@ -29,6 +29,18 @@ require('rfdc')({ proto: true })(Object.create({a: 1})) // => {a: 1}
 If this behavior is acceptable, set
 `proto` to `true` for an additional 15% performance boost
 (see benchmarks).
+
+#### `circles` option
+
+Keeping track of circular references will slow down performance
+with an additional 40% overhead. By default if an object with 
+a circular reference is passed in, `rfdc` will throw (similar to
+how `JSON.stringify` would throw). 
+
+Use the `circles` option to detect and preserve circular references
+in the object. If performance is important, try removing the 
+circular reference from the object (set to `undefined`) and then
+add it back manually after cloning instead of using this option.
 
 ### Types
 
@@ -75,11 +87,13 @@ npm run bench
 ```
 
 ```
-benchDeepCopy*100: 639.536ms
-benchLodashCloneDeep*100: 1724.347ms
-benchFastCopy*100: 905.749ms
-benchRfdc*100: 567.140ms
-benchRfdcProto*100: 478.072ms
+benchDeepCopy*100: 687.014ms
+benchLodashCloneDeep*100: 1803.993ms
+benchFastCopy*100: 929.259ms
+benchRfdc*100: 565.133ms
+benchRfdcProto*100: 484.401ms
+benchRfdcCircles*100: 846.672ms
+benchRfdcCirclesProto*100: 752.908ms
 ```
 
 ## Tests
@@ -89,7 +103,7 @@ npm test
 ```
 
 ```
-62 passing (293.154ms)
+148 passing (365.985ms)
 ```
 
 ### Coverage
