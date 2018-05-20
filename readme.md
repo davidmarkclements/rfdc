@@ -33,8 +33,9 @@ If this behavior is acceptable, set
 #### `circles` option
 
 Keeping track of circular references will slow down performance
-with an additional 40% overhead. By default if an object with 
-a circular reference is passed in, `rfdc` will throw (similar to
+with an additional 40%-50% overhead (even if an object doesn't have
+any circular references, the tracking is the cost). By default if 
+an object with a circular reference is passed in, `rfdc` will throw (similar to
 how `JSON.stringify` would throw). 
 
 Use the `circles` option to detect and preserve circular references
