@@ -3,138 +3,145 @@ module.exports = rfdc
 
 function rfdc (opts) {
   opts = opts || {}
-  const proto = opts.proto || false
-  const circles = opts.circles || false
-  if (circles) return rfdcCircles(opts)
-  return proto ? cloneProto : clone
+
+  if (opts.circles) return rfdcCircles(opts)
+  return opts.proto ? cloneProto : clone
+
+  function cloneArray (a, fn) {
+    const keys = Object.keys(a)
+    const a2 = new Array(keys.length)
+    for (var i = 0; i < keys.length; i++) {
+      const k = keys[i]
+      const cur = a[k]
+      if (typeof cur !== 'object' || cur === null) {
+        a2[k] = cur
+      } else if (cur instanceof Date) {
+        a2[k] = new Date(cur)
+      } else {
+        a2[k] = fn(cur)
+      }
+    }
+    return a2
+  }
+
   function clone (o) {
-    const type = typeof o
-    if (type === 'function') return o
-    if (o === null || type !== 'object') return o
+    if (typeof o !== 'object' || o === null) return o
     if (o instanceof Date) return new Date(o)
-    const o2 = Array.isArray(o) ? new Array(o.length) : {}
+    if (Array.isArray(o)) return cloneArray(o, clone)
+    const o2 = {}
     for (var k in o) {
       if (Object.hasOwnProperty.call(o, k) === false) continue
-      var cur = o[k]
-      if (typeof cur === 'function') {
+      const cur = o[k]
+      if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
-        continue
-      }
-      if (cur === null) {
-        o2[k] = null
-        continue
-      }
-      if (typeof cur === 'object') {
-        if (cur instanceof Date) {
-          o2[k] = new Date(cur)
-          continue
-        }
+      } else if (cur instanceof Date) {
+        o2[k] = new Date(cur)
+      } else {
         o2[k] = clone(cur)
-        continue
       }
-      o2[k] = cur
     }
     return o2
   }
 
   function cloneProto (o) {
-    const type = typeof o
-    if (type === 'function') return o
-    if (o === null || type !== 'object') return o
+    if (typeof o !== 'object' || o === null) return o
     if (o instanceof Date) return new Date(o)
-    const o2 = Array.isArray(o) ? new Array(o.length) : {} 
+    if (Array.isArray(o)) return cloneArray(o, cloneProto)
+    const o2 = {}
     for (var k in o) {
       var cur = o[k]
-      if (typeof cur === 'function') {
+      if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
-        continue
-      }
-      if (cur === null) {
-        o2[k] = null
-        continue
-      }
-      if (typeof cur === 'object') {
-        if (cur instanceof Date) {
-          o2[k] = new Date(cur)
-          continue
-        }
+      } else if (cur instanceof Date) {
+        o2[k] = new Date(cur)
+      } else {
         o2[k] = cloneProto(cur)
-        continue
       }
-      o2[k] = cur
     }
     return o2
   }
 }
 
-
 function rfdcCircles (opts) {
-  const proto = opts.proto || false
-  const refs = new WeakMap()
+  const refs = []
+  const refsNew = []
 
-  return proto ? cloneProto : clone
+  return opts.proto ? cloneProto : clone
+
+  function cloneArray (a, fn) {
+    const keys = Object.keys(a)
+    const a2 = new Array(keys.length)
+    for (var i = 0; i < keys.length; i++) {
+      const k = keys[i]
+      const cur = a[k]
+      if (typeof cur !== 'object' || cur === null) {
+        a2[k] = cur
+      } else if (cur instanceof Date) {
+        a2[k] = new Date(cur)
+      } else {
+        const index = refs.indexOf(cur)
+        if (index !== -1) {
+          a2[k] = refsNew[index]
+        } else {
+          a2[k] = fn(cur)
+        }
+      }
+    }
+    return a2
+  }
+
   function clone (o) {
-    const type = typeof o
-    if (type === 'function') return o
-    if (o === null || type !== 'object') return o
+    if (typeof o !== 'object' || o === null) return o
     if (o instanceof Date) return new Date(o)
-    const o2 = Array.isArray(o) ? new Array(o.length) : {}
-    refs.set(o, o2)
+    if (Array.isArray(o)) return cloneArray(o, clone)
+    const o2 = {}
+    refs.push(o)
+    refsNew.push(o2)
     for (var k in o) {
       if (Object.hasOwnProperty.call(o, k) === false) continue
-      var cur = o[k]
-      if (typeof cur === 'function') {
+      const cur = o[k]
+      if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
-        continue
-      }
-      if (cur === null) {
-        o2[k] = null
-        continue
-      }
-      if (typeof cur === 'object') {
-        if (cur instanceof Date) {
-          o2[k] = new Date(cur)
-          continue
+      } else if (cur instanceof Date) {
+        o2[k] = new Date(cur)
+      } else {
+        const i = refs.indexOf(cur)
+        if (i !== -1) {
+          o2[k] = refsNew[i]
+        } else {
+          o2[k] = clone(cur)
         }
-        if (refs.has(cur)) o2[k] = refs.get(cur)
-        else o2[k] = clone(cur)
-        continue
       }
-      o2[k] = cur
     }
-    refs.delete(o)
+    refs.pop()
+    refsNew.pop()
     return o2
   }
 
   function cloneProto (o) {
-    const type = typeof o
-    if (type === 'function') return o
-    if (o === null || type !== 'object') return o
+    if (typeof o !== 'object' || o === null) return o
     if (o instanceof Date) return new Date(o)
-    const o2 = Array.isArray(o) ? new Array(o.length) : {}
-    refs.set(o, o2)    
+    if (Array.isArray(o)) return cloneArray(o, cloneProto)
+    const o2 = {}
+    refs.push(o)
+    refsNew.push(o2)
     for (var k in o) {
-      var cur = o[k]
-      if (typeof cur === 'function') {
+      const cur = o[k]
+      if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
-        continue
-      }
-      if (cur === null) {
-        o2[k] = null
-        continue
-      }
-      if (typeof cur === 'object') {
-        if (cur instanceof Date) {
-          o2[k] = new Date(cur)
-          continue
+      } else if (cur instanceof Date) {
+        o2[k] = new Date(cur)
+      } else {
+        const i = refs.indexOf(cur)
+        if (i !== -1) {
+          o2[k] = refsNew[i]
+        } else {
+          o2[k] = cloneProto(cur)
         }
-        if (refs.has(cur)) o2[k] = refs.get(cur)
-        else o2[k] = cloneProto(cur)
-        continue
       }
-      o2[k] = cur
     }
-    refs.delete(o)
+    refs.pop()
+    refsNew.pop()
     return o2
   }
 }

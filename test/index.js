@@ -26,7 +26,7 @@ test('circles option - circular object', async ({same, is, isNot}) => {
   isNot(cloneCircles(o).nest, o.nest, 'different nested objects')
   const c = cloneCircles(o)
   is(c.circular, c, 'circular references point to copied parent')
-  isNot(c.circular, o, 'circular references do not point to original parent') 
+  isNot(c.circular, o, 'circular references do not point to original parent')
 })
 test('circles option – deep circular object', async ({same, is, isNot}) => {
   const o = {nest: {a: 1, b: 2}}
@@ -36,7 +36,7 @@ test('circles option – deep circular object', async ({same, is, isNot}) => {
   isNot(cloneCircles(o).nest, o.nest, 'different nested objects')
   const c = cloneCircles(o)
   is(c.nest.circular, c, 'circular references point to copied parent')
-  isNot(c.nest.circular, o, 'circular references do not point to original parent') 
+  isNot(c.nest.circular, o, 'circular references do not point to original parent')
 })
 test('circles option alone – does not copy proto properties', async ({is}) => {
   is(cloneCircles(Object.create({a: 1})).a, undefined, 'value not copied')
@@ -52,7 +52,7 @@ test('circles and proto option - circular object', async ({same, is, isNot}) => 
   isNot(cloneCirclesProto(o).nest, o.nest, 'different nested objects')
   const c = cloneCirclesProto(o)
   is(c.circular, c, 'circular references point to copied parent')
-  isNot(c.circular, o, 'circular references do not point to original parent') 
+  isNot(c.circular, o, 'circular references do not point to original parent')
 })
 test('circles and proto option – deep circular object', async ({same, is, isNot}) => {
   const o = {nest: {a: 1, b: 2}}
@@ -62,10 +62,20 @@ test('circles and proto option – deep circular object', async ({same, is, isNo
   isNot(cloneCirclesProto(o).nest, o.nest, 'different nested objects')
   const c = cloneCirclesProto(o)
   is(c.nest.circular, c, 'circular references point to copied parent')
-  isNot(c.nest.circular, o, 'circular references do not point to original parent') 
+  isNot(c.nest.circular, o, 'circular references do not point to original parent')
+})
+test('circles and proto option – deep circular array', async ({same, is, isNot}) => {
+  const o = {nest: [1, 2] }
+  o.nest.push(o)
+  same(cloneCirclesProto(o), o, 'same values')
+  isNot(cloneCirclesProto(o), o, 'different objects')
+  isNot(cloneCirclesProto(o).nest, o.nest, 'different nested objects')
+  const c = cloneCirclesProto(o)
+  is(c.nest[2], c, 'circular references point to copied parent')
+  isNot(c.nest[2], o, 'circular references do not point to original parent')
 })
 
-function types(clone, label) {
+function types (clone, label) {
   test(label + ' – number', async ({is}) => {
     is(clone(42), 42, 'same value')
   })
@@ -143,6 +153,13 @@ function types(clone, label) {
     const date = new Date()
     is(+clone({d: date}).d, +date, 'same value')
     isNot(clone({d: date}).d, date, 'different object')
+  })
+  test(label + ' – nested date in array', async ({is, isNot}) => {
+    const date = new Date()
+    is(+clone({d: [date]}).d[0], +date, 'same value')
+    isNot(clone({d: [date]}).d[0], date, 'different object')
+    is(+cloneCircles({d: [date]}).d[0], +date, 'same value')
+    isNot(cloneCircles({d: [date]}).d, date, 'different object')
   })
   test(label + ' – nested null', async ({is}) => {
     is(clone({n: null}).n, null, 'same value')

@@ -15,39 +15,36 @@ clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
 
 #### `proto` option
 
-It's faster to allow enumerable properties on the prototype 
-to be copied into the cloned object (not onto it's prototype,
-directly onto the object).
+It's faster to allow enumerable properties on the prototype to be copied into
+the cloned object (not onto it's prototype, directly onto the object).
 
-To explain by way of code: 
+To explain by way of code:
 
 ```js
 require('rfdc')({ proto: false })(Object.create({a: 1})) // => {}
 require('rfdc')({ proto: true })(Object.create({a: 1})) // => {a: 1}
-``` 
+```
 
-If this behavior is acceptable, set
-`proto` to `true` for an additional 15% performance boost
-(see benchmarks).
+If this behavior is acceptable, set `proto` to `true` for an additional 2%
+performance boost.
 
 #### `circles` option
 
-Keeping track of circular references will slow down performance
-with an additional 40%-50% overhead (even if an object doesn't have
-any circular references, the tracking is the cost). By default if 
-an object with a circular reference is passed in, `rfdc` will throw (similar to
-how `JSON.stringify` would throw). 
+Keeping track of circular references will slow down performance with an
+additional 25% overhead (even if an object doesn't have any circular references,
+the tracking is the cost). By default if an object with a circular reference is
+passed in, `rfdc` will throw (similar to how `JSON.stringify` would throw).
 
-Use the `circles` option to detect and preserve circular references
-in the object. If performance is important, try removing the 
-circular reference from the object (set to `undefined`) and then
-add it back manually after cloning instead of using this option.
+Use the `circles` option to detect and preserve circular references in the
+object. If performance is important, try removing the circular reference from
+the object (set to `undefined`) and then add it back manually after cloning
+instead of using this option.
 
 ### Types
 
 `rdfc` clones all JSON types:
 
-* `Object` 
+* `Object`
 * `Array`
 * `Number`
 * `String`
@@ -65,7 +62,7 @@ With additional support for:
 All other types have output values that match the output
 of `JSON.parse(JSON.stringify(o))`.
 
-For instance: 
+For instance:
 
 ```js
 const rdfc = require('rdfc')()
@@ -88,13 +85,13 @@ npm run bench
 ```
 
 ```
-benchDeepCopy*100: 687.014ms
-benchLodashCloneDeep*100: 1803.993ms
-benchFastCopy*100: 929.259ms
-benchRfdc*100: 565.133ms
-benchRfdcProto*100: 484.401ms
-benchRfdcCircles*100: 846.672ms
-benchRfdcCirclesProto*100: 752.908ms
+benchDeepCopy*100: 716.764ms
+benchLodashCloneDeep*100: 1900.503ms
+benchFastCopy*100: 1036.360ms
+benchRfdc*100: 408.775ms
+benchRfdcProto*100: 411.914ms
+benchRfdcCircles*100: 529.198ms
+benchRfdcCirclesProto*100: 519.694ms
 ```
 
 ## Tests
@@ -104,13 +101,13 @@ npm test
 ```
 
 ```
-148 passing (365.985ms)
+169 passing (625.569ms)
 ```
 
 ### Coverage
 
 ```sh
-npm run cov 
+npm run cov
 ```
 
 ```
