@@ -2,13 +2,18 @@
   "name": "rfdc",
   "version": "1.1.2",
   "description": "Really Fast Deep Clone",
-  "main": "index.js",
+  "main": "dist/rfdc.common.js",
+  "module": "dist/rfdc.js",
+  "unpkg": "dist/rfdc.umd.js",
   "scripts": {
     "test": "tap -R min test",
     "bench": "node benchmark",
     "lint": "standard",
     "cov": "tap --cov test",
-    "cov-ui": "tap --coverage-report=html test"
+    "cov-ui": "tap --coverage-report=html test",
+    "clean": "rimraf dist/",
+    "compile": "cross-env NODE_ENV=production rollup -c",
+    "build": "npm run clean && npm run compile"
   },
   "keywords": [
     "object",
@@ -39,11 +44,17 @@
   "author": "David Mark Clements <david.clements@nearform.com>",
   "license": "MIT",
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "deep-copy": "^1.4.2",
     "fast-copy": "^1.2.1",
     "fastbench": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
-    "standard": "^11.0.1",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.1.2",
+    "rollup-plugin-buble": "^0.19.6",
+    "rollup-plugin-eslint": "^5.0.0",
+    "rollup-plugin-uglify": "^5.0.2",
+    "standard": "^12.0.1",
     "tap": "^12.0.1"
   },
   "directories": {
@@ -57,5 +68,8 @@
   "bugs": {
     "url": "https://github.com/davidmarkclements/rfdc/issues"
   },
-  "homepage": "https://github.com/davidmarkclements/rfdc#readme"
+  "homepage": "https://github.com/davidmarkclements/rfdc#readme",
+  "eslintConfig": {
+    "extends": "standard"
+  }
 }

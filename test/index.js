@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const rfdc = require('..')
+const rfdc = require('../src')
 const clone = rfdc()
 const cloneProto = rfdc({proto: true})
 const cloneCircles = rfdc({circles: true})
