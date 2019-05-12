@@ -85,13 +85,13 @@ npm run bench
 ```
 
 ```
-benchDeepCopy*100: 716.764ms
-benchLodashCloneDeep*100: 1900.503ms
-benchFastCopy*100: 1036.360ms
-benchRfdc*100: 408.775ms
-benchRfdcProto*100: 411.914ms
-benchRfdcCircles*100: 529.198ms
-benchRfdcCirclesProto*100: 519.694ms
+benchDeepCopy*100: 549.618ms
+benchLodashCloneDeep*100: 1461.134ms
+benchFastCopy*100: 878.146ms
+benchRfdc*100: 323.899ms
+benchRfdcProto*100: 314.136ms
+benchRfdcCircles*100: 384.561ms
+benchRfdcCirclesProto*100: 381.775ms
 ```
 
 ## Tests
@@ -101,7 +101,7 @@ npm test
 ```
 
 ```
-169 passing (625.569ms)
+169 passing (342.514ms)
 ```
 
 ### Coverage
