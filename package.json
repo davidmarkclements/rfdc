@@ -4,11 +4,12 @@
   "description": "Really Fast Deep Clone",
   "main": "index.js",
   "scripts": {
-    "test": "tap -R min test",
+    "test": "tap -R min test && npm run lint",
     "bench": "node benchmark",
-    "lint": "standard",
-    "cov": "tap --cov test",
-    "cov-ui": "tap --coverage-report=html test"
+    "lint": "standard --fix",
+    "cov": "tap --100 test",
+    "cov-ui": "tap --coverage-report=html test",
+    "ci": "standard && npm run cov"
   },
   "keywords": [
     "object",
