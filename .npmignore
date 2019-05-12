@@ -2,4 +2,4 @@
 .editorconfig
 coverage
 benchmark
-.editorconfig
+.travis.yml
