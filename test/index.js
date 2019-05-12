@@ -65,7 +65,7 @@ test('circles and proto option – deep circular object', async ({same, is, isNo
   isNot(c.nest.circular, o, 'circular references do not point to original parent')
 })
 test('circles and proto option – deep circular array', async ({same, is, isNot}) => {
-  const o = {nest: [1, 2] }
+  const o = { nest: [1, 2] }
   o.nest.push(o)
   same(cloneCirclesProto(o), o, 'same values')
   isNot(cloneCirclesProto(o), o, 'different objects')

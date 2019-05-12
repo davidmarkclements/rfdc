@@ -10,7 +10,7 @@ const cloneProto = clone({proto: true})
 const cloneCircles = clone({circles: true})
 const cloneCirclesProto = clone({circles: true, proto: true})
 const max = 1000
-
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "^x$" }] */
 var run = bench([
   function benchDeepCopy (cb) {
     for (var i = 0; i < max; i++) {
