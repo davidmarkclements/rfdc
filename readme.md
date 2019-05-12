@@ -2,6 +2,8 @@
 
 Really Fast Deep Clone
 
+![build passing](https://img.shields.io/travis/davidmarkclements/rfdc.svg)
+
 ## Usage
 
 ```js
@@ -15,8 +17,10 @@ clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
 
 #### `proto` option
 
-It's faster to allow enumerable properties on the prototype to be copied into
-the cloned object (not onto it's prototype, directly onto the object).
+Copy prototype properties as well as own properties into the new object.
+
+It's marginally faster to allow enumerable properties on the prototype 
+to be copied into the cloned object (not onto it's prototype, directly onto the object).
 
 To explain by way of code:
 
@@ -25,15 +29,15 @@ require('rfdc')({ proto: false })(Object.create({a: 1})) // => {}
 require('rfdc')({ proto: true })(Object.create({a: 1})) // => {a: 1}
 ```
 
-If this behavior is acceptable, set `proto` to `true` for an additional 2%
-performance boost.
+Setting `proto` to `true` will provide an additional 2% performance boost.
 
 #### `circles` option
 
 Keeping track of circular references will slow down performance with an
-additional 25% overhead (even if an object doesn't have any circular references,
-the tracking is the cost). By default if an object with a circular reference is
-passed in, `rfdc` will throw (similar to how `JSON.stringify` would throw).
+additional 25% overhead. Even if an object doesn't have any circular references,
+the tracking overhead is the cost. By default if an object with a circular 
+reference is passed to `rfdc`, it will throw (similar to how `JSON.stringify` \
+would throw).
 
 Use the `circles` option to detect and preserve circular references in the
 object. If performance is important, try removing the circular reference from
