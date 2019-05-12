@@ -2,7 +2,8 @@
 
 Really Fast Deep Clone
 
-![build passing](https://img.shields.io/travis/davidmarkclements/rfdc.svg)
+![build status](https://img.shields.io/travis/davidmarkclements/rfdc.svg)
+[![coverage](https://img.shields.io/codecov/c/github/davidmarkclements/rfdc.svg)](https://codecov.io/gh/davidmarkclements/rfdc)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
 
