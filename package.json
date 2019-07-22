@@ -4,7 +4,7 @@
   "description": "Really Fast Deep Clone",
   "main": "index.js",
   "scripts": {
-    "test": "tap -R min test && npm run lint",
+    "test": "tap -R min test && npm run lint && tsd",
     "bench": "node benchmark",
     "lint": "standard --fix",
     "cov": "tap --100 test",
@@ -46,7 +46,8 @@
     "fastbench": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
     "standard": "^11.0.1",
-    "tap": "^12.0.1"
+    "tap": "^12.0.1",
+    "tsd": "^0.7.4"
   },
   "directories": {
     "test": "test"
