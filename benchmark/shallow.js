@@ -1,7 +1,8 @@
 'use strict'
 const bench = require('fastbench')
 const deepCopy = require('deep-copy')
-const cloneDeep = require('lodash.clonedeep')
+const lodashCloneDeep = require('lodash.clonedeep')
+const cloneDeep = require('clone-deep')
 const fastCopy = require('fast-copy').default
 const obj = {a: 'a', b: 'b', c: 'c'}
 const clone = require('..')
@@ -19,6 +20,12 @@ var run = bench([
     setImmediate(cb)
   },
   function benchLodashCloneDeep (cb) {
+    for (var i = 0; i < max; i++) {
+      lodashCloneDeep(obj)
+    }
+    setImmediate(cb)
+  },
+  function benchCloneDeep (cb) {
     for (var i = 0; i < max; i++) {
       cloneDeep(obj)
     }

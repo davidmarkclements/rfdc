@@ -40,6 +40,7 @@
   "author": "David Mark Clements <david.clements@nearform.com>",
   "license": "MIT",
   "devDependencies": {
+    "clone-deep": "^4.0.1",
     "codecov": "^3.4.0",
     "deep-copy": "^1.4.2",
     "fast-copy": "^1.2.1",
