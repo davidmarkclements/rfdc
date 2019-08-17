@@ -23,7 +23,7 @@ clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
 
 Copy prototype properties as well as own properties into the new object.
 
-It's marginally faster to allow enumerable properties on the prototype 
+It's marginally faster to allow enumerable properties on the prototype
 to be copied into the cloned object (not onto it's prototype, directly onto the object).
 
 To explain by way of code:
@@ -39,7 +39,7 @@ Setting `proto` to `true` will provide an additional 2% performance boost.
 
 Keeping track of circular references will slow down performance with an
 additional 25% overhead. Even if an object doesn't have any circular references,
-the tracking overhead is the cost. By default if an object with a circular 
+the tracking overhead is the cost. By default if an object with a circular
 reference is passed to `rfdc`, it will throw (similar to how `JSON.stringify` \
 would throw).
 
@@ -93,13 +93,14 @@ npm run bench
 ```
 
 ```
-benchDeepCopy*100: 549.618ms
-benchLodashCloneDeep*100: 1461.134ms
-benchFastCopy*100: 878.146ms
-benchRfdc*100: 323.899ms
-benchRfdcProto*100: 314.136ms
-benchRfdcCircles*100: 384.561ms
-benchRfdcCirclesProto*100: 381.775ms
+benchDeepCopy*100: 457.568ms
+benchLodashCloneDeep*100: 1230.773ms
+benchCloneDeep*100: 655.208ms
+benchFastCopy*100: 747.017ms
+benchRfdc*100: 281.018ms
+benchRfdcProto*100: 277.265ms
+benchRfdcCircles*100: 328.148ms
+benchRfdcCirclesProto*100: 323.004ms
 ```
 
 ## Tests
