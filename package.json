@@ -3,6 +3,10 @@
   "version": "1.1.4",
   "description": "Really Fast Deep Clone",
   "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./default": "./default/index.js"
+  },
   "scripts": {
     "test": "tap -R min test && npm run lint && tsd",
     "bench": "node benchmark",
