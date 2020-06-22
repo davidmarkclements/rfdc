@@ -5,7 +5,7 @@
   "main": "index.js",
   "exports": {
     ".": "./index.js",
-    "./default": "./default/index.js"
+    "./default": ".default.js"
   },
   "scripts": {
     "test": "tap -R min test && npm run lint && tsd",
