@@ -19,6 +19,16 @@ clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
 
 ### `require('rfdc')(opts = { proto: false, circles: false }) => clone(obj) => obj2`
 
+#### `default` option
+
+If you just need the default implementation of the clone function without any options,
+you can directly import it by calling:
+
+```js
+const clone = require("rfdc/default")
+clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
+```
+
 #### `proto` option
 
 Copy prototype properties as well as own properties into the new object.
