@@ -19,16 +19,6 @@ clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
 
 ### `require('rfdc')(opts = { proto: false, circles: false }) => clone(obj) => obj2`
 
-#### `default` option
-
-If you just need the default implementation of the clone function without any options,
-you can directly import it by calling:
-
-```js
-const clone = require("rfdc/default")
-clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
-```
-
 #### `proto` option
 
 Copy prototype properties as well as own properties into the new object.
@@ -57,6 +47,15 @@ Use the `circles` option to detect and preserve circular references in the
 object. If performance is important, try removing the circular reference from
 the object (set to `undefined`) and then add it back manually after cloning
 instead of using this option.
+
+### `default` import
+It is also possible to directly import the clone function with all options set
+to their default:
+
+```js
+const clone = require("rfdc/default")
+clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
+```
 
 ### Types
 
