@@ -2,6 +2,7 @@
 
 const { test } = require('tap')
 const rfdc = require('..')
+const cloneDefault = require('../default')
 const clone = rfdc()
 const cloneProto = rfdc({proto: true})
 const cloneCircles = rfdc({circles: true})
@@ -14,6 +15,9 @@ types(cloneCirclesProto, 'circles and proto option')
 
 test('default – does not copy proto properties', async ({is}) => {
   is(clone(Object.create({a: 1})).a, undefined, 'value not copied')
+})
+test('default – shorthand import', async ({same}) => {
+  same(clone(Object.create({a: 1})), cloneDefault(Object.create({a: 1})), 'import equals clone with default options')
 })
 test('proto option – copies enumerable proto properties', async ({is}) => {
   is(cloneProto(Object.create({a: 1})).a, 1, 'value copied')

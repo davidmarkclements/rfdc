@@ -48,6 +48,15 @@ object. If performance is important, try removing the circular reference from
 the object (set to `undefined`) and then add it back manually after cloning
 instead of using this option.
 
+### `default` import
+It is also possible to directly import the clone function with all options set
+to their default:
+
+```js
+const clone = require("rfdc/default")
+clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
+```
+
 ### Types
 
 `rdfc` clones all JSON types:
