@@ -59,7 +59,7 @@ clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
 
 ### Types
 
-`rdfc` clones all JSON types:
+`rfdc` clones all JSON types:
 
 * `Object`
 * `Array`
@@ -82,17 +82,17 @@ of `JSON.parse(JSON.stringify(o))`.
 For instance:
 
 ```js
-const rdfc = require('rdfc')()
+const rfdc = require('rfdc')()
 const err = Error()
 err.code = 1
 JSON.parse(JSON.stringify(e)) // {code: 1}
-rdfc(e) // {code: 1}
+rfdc(e) // {code: 1}
 
 JSON.parse(JSON.stringify(new Uint8Array([1, 2, 3]))) //  {'0': 1, '1': 2, '2': 3 }
-rdfc(new Uint8Array([1, 2, 3])) //  {'0': 1, '1': 2, '2': 3 }
+rfdc(new Uint8Array([1, 2, 3])) //  {'0': 1, '1': 2, '2': 3 }
 
 JSON.parse(JSON.stringify({rx: /foo/})) // {rx: {}}
-rdfc({rx: /foo/}) // {rx: {}}
+rfdc({rx: /foo/}) // {rx: {}}
 ```
 
 ## Benchmarks
