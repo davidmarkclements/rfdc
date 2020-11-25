@@ -71,6 +71,7 @@ With additional support for:
 
 * `Date` (copied)
 * `undefined` (copied)
+* `Buffer` (copied)
 * `Function` (referenced)
 * `AsyncFunction` (referenced)
 * `GeneratorFunction` (referenced)

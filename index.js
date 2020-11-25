@@ -17,6 +17,8 @@ function rfdc (opts) {
         a2[k] = cur
       } else if (cur instanceof Date) {
         a2[k] = new Date(cur)
+      } else if (Buffer.isBuffer(cur)) {
+        a2[k] = Buffer.from(cur)
       } else {
         a2[k] = fn(cur)
       }
@@ -36,6 +38,8 @@ function rfdc (opts) {
         o2[k] = cur
       } else if (cur instanceof Date) {
         o2[k] = new Date(cur)
+      } else if (Buffer.isBuffer(cur)) {
+        o2[k] = Buffer.from(cur)
       } else {
         o2[k] = clone(cur)
       }
@@ -54,6 +58,8 @@ function rfdc (opts) {
         o2[k] = cur
       } else if (cur instanceof Date) {
         o2[k] = new Date(cur)
+      } else if (Buffer.isBuffer(cur)) {
+        o2[k] = Buffer.from(cur)
       } else {
         o2[k] = cloneProto(cur)
       }
@@ -78,6 +84,8 @@ function rfdcCircles (opts) {
         a2[k] = cur
       } else if (cur instanceof Date) {
         a2[k] = new Date(cur)
+      } else if (Buffer.isBuffer(cur)) {
+        a2[k] = Buffer.from(cur)
       } else {
         var index = refs.indexOf(cur)
         if (index !== -1) {
@@ -104,6 +112,8 @@ function rfdcCircles (opts) {
         o2[k] = cur
       } else if (cur instanceof Date) {
         o2[k] = new Date(cur)
+      } else if (Buffer.isBuffer(cur)) {
+        o2[k] = Buffer.from(cur)
       } else {
         var i = refs.indexOf(cur)
         if (i !== -1) {
@@ -131,6 +141,8 @@ function rfdcCircles (opts) {
         o2[k] = cur
       } else if (cur instanceof Date) {
         o2[k] = new Date(cur)
+      } else if (Buffer.isBuffer(cur)) {
+        o2[k] = Buffer.from(cur)
       } else {
         var i = refs.indexOf(cur)
         if (i !== -1) {
