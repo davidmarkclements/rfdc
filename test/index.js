@@ -223,7 +223,7 @@ function types (clone, label) {
   })
   test(`${label} copies TypedArrays from object correctly`, async ({ ok, is, isNot }) => {
     const [input1, input2] = [rnd(10), rnd(10)]
-    var buffer = new ArrayBuffer(16)
+    var buffer = new ArrayBuffer(8)
     const int32View = new Int32Array(buffer)
     int32View[0] = input1
     int32View[1] = input2
@@ -244,5 +244,25 @@ function types (clone, label) {
     isNot(cloned, int32View, 'cloned value is not same as input value')
     is(cloned[0], input1, 'cloned value content is correct')
     is(cloned[1], input2, 'cloned value content is correct')
+  })
+  test(`${label} copies complex TypedArrays`, async ({ ok, deepEqual, is, isNot }) => {
+    const [input1, input2, input3] = [rnd(10), rnd(10), rnd(10)]
+    var buffer = new ArrayBuffer(4)
+    const view1 = new Int8Array(buffer, 0, 2)
+    const view2 = new Int8Array(buffer, 2, 2)
+    const view3 = new Int8Array(buffer)
+    view1[0] = input1
+    view2[0] = input2
+    view3[3] = input3
+    const cloned = clone({ view1, view2, view3 })
+    ok(cloned.view1 instanceof Int8Array, 'cloned value is instance of class')
+    ok(cloned.view2 instanceof Int8Array, 'cloned value is instance of class')
+    ok(cloned.view3 instanceof Int8Array, 'cloned value is instance of class')
+    isNot(cloned.view1, view1, 'cloned value is not same as input value')
+    isNot(cloned.view2, view2, 'cloned value is not same as input value')
+    isNot(cloned.view3, view3, 'cloned value is not same as input value')
+    deepEqual(Array.from(cloned.view1), [input1, 0], 'cloned value content is correct')
+    deepEqual(Array.from(cloned.view2), [input2, input3], 'cloned value content is correct')
+    deepEqual(Array.from(cloned.view3), [input1, 0, input2, input3], 'cloned value content is correct')
   })
 }

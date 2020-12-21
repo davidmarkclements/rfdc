@@ -6,7 +6,7 @@ function copyBuffer (cur) {
     return Buffer.from(cur)
   }
 
-  return new cur.constructor(cur.buffer.slice())
+  return new cur.constructor(cur.buffer.slice(), cur.byteOffset, cur.length)
 }
 
 function rfdc (opts) {
