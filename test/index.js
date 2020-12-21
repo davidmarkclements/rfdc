@@ -8,6 +8,8 @@ const cloneProto = rfdc({ proto: true })
 const cloneCircles = rfdc({ circles: true })
 const cloneCirclesProto = rfdc({ circles: true, proto: true })
 
+const rnd = (max) => Math.round(Math.random() * max)
+
 types(clone, 'default')
 types(cloneProto, 'proto option')
 types(cloneCircles, 'circles option')
@@ -218,5 +220,29 @@ function types (clone, label) {
     ok(Buffer.isBuffer(clonedBuffer), 'cloned value is buffer')
     isNot(clonedBuffer, inputBuffer, 'cloned buffer is not same as input buffer')
     is(clonedBuffer.toString(), input, 'cloned buffer content is correct')
+  })
+  test(`${label} copies TypedArrays from object correctly`, async ({ ok, is, isNot }) => {
+    const [input1, input2] = [rnd(10), rnd(10)]
+    var buffer = new ArrayBuffer(16)
+    const int32View = new Int32Array(buffer)
+    int32View[0] = input1
+    int32View[1] = input2
+    const cloned = clone({ a: int32View }).a
+    ok(cloned instanceof Int32Array, 'cloned value is instance of class')
+    isNot(cloned, int32View, 'cloned value is not same as input value')
+    is(cloned[0], input1, 'cloned value content is correct')
+    is(cloned[1], input2, 'cloned value content is correct')
+  })
+  test(`${label} copies TypedArrays from array correctly`, async ({ ok, is, isNot }) => {
+    const [input1, input2] = [rnd(10), rnd(10)]
+    var buffer = new ArrayBuffer(16)
+    const int32View = new Int32Array(buffer)
+    int32View[0] = input1
+    int32View[1] = input2
+    const [cloned] = clone([int32View])
+    ok(cloned instanceof Int32Array, 'cloned value is instance of class')
+    isNot(cloned, int32View, 'cloned value is not same as input value')
+    is(cloned[0], input1, 'cloned value content is correct')
+    is(cloned[1], input2, 'cloned value content is correct')
   })
 }
