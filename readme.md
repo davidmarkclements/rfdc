@@ -72,6 +72,7 @@ With additional support for:
 * `Date` (copied)
 * `undefined` (copied)
 * `Buffer` (copied)
+* `TypedArray` (copied)
 * `Function` (referenced)
 * `AsyncFunction` (referenced)
 * `GeneratorFunction` (referenced)
@@ -88,9 +89,6 @@ const err = Error()
 err.code = 1
 JSON.parse(JSON.stringify(e)) // {code: 1}
 rfdc(e) // {code: 1}
-
-JSON.parse(JSON.stringify(new Uint8Array([1, 2, 3]))) //  {'0': 1, '1': 2, '2': 3 }
-rfdc(new Uint8Array([1, 2, 3])) //  {'0': 1, '1': 2, '2': 3 }
 
 JSON.parse(JSON.stringify({rx: /foo/})) // {rx: {}}
 rfdc({rx: /foo/}) // {rx: {}}
