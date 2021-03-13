@@ -267,22 +267,22 @@ function types (clone, label) {
   })
   test(`${label} - maps`, async ({ same, isNot }) => {
     const map = new Map([['a', 1]])
-    same(Array.from(clone(map)), [['a', 1]])
-    isNot(clone(map), map)
+    same(Array.from(clone(map)), [['a', 1]], "same value")
+    isNot(clone(map), map, "different object")
   })
   test(`${label} - sets`, async ({ same, isNot }) => {
     const set = new Set([1])
     same(Array.from(clone(set)), [1])
-    isNot(clone(set), set)
+    isNot(clone(set), set, "different object")
   })
   test(`${label} - nested maps`, async ({ same, isNot }) => {
     const data = { m: new Map([['a', 1]]) }
-    same(Array.from(clone(data).m), [['a', 1]])
-    isNot(clone(data).m, data.m)
+    same(Array.from(clone(data).m), [['a', 1]], "same value")
+    isNot(clone(data).m, data.m, "different object")
   })
   test(`${label} - nested sets`, async ({ same, isNot }) => {
     const data = { s: new Set([1]) }
-    same(Array.from(clone(data).s), [1])
-    isNot(clone(data).s, data.s)
+    same(Array.from(clone(data).s), [1], "same value")
+    isNot(clone(data).s, data.s, "different object")
   })
 }
