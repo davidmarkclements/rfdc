@@ -4,7 +4,7 @@ const deepCopy = require('deep-copy')
 const lodashCloneDeep = require('lodash.clonedeep')
 const cloneDeep = require('clone-deep')
 const fastCopy = require('fast-copy').default
-const R = require('ramda');
+const R = require('ramda')
 const obj = {a: 'a', b: 'b', c: 'c'}
 const clone = require('..')
 const cloneDefaults = clone()
@@ -26,8 +26,8 @@ var run = bench([
     }
     setImmediate(cb)
   },
-    function benchRamda(cb){
-    for (var i = 0 ; i < max; i++){
+  function benchRamda (cb) {
+    for (var i = 0; i < max; i++) {
       R.clone(obj)
     }
     setImmediate(cb)
