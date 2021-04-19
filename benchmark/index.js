@@ -2,6 +2,7 @@
 const bench = require('fastbench')
 const deepCopy = require('deep-copy')
 const lodashCloneDeep = require('lodash.clonedeep')
+const R = require('ramda');
 const cloneDeep = require('clone-deep')
 const fastCopy = require('fast-copy').default
 const obj = require('./fixture.json')
@@ -34,6 +35,12 @@ var run = bench([
   function benchFastCopy (cb) {
     for (var i = 0; i < max; i++) {
       fastCopy(obj)
+    }
+    setImmediate(cb)
+  },
+  function benchRamda(cb){
+    for (var i = 0 ; i < max; i++){
+      R.clone(obj)
     }
     setImmediate(cb)
   },
