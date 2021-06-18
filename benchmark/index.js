@@ -6,6 +6,8 @@ const cloneDeep = require('clone-deep')
 const fastCopy = require('fast-copy').default
 const obj = require('./fixture.json')
 const clone = require('..')
+const copyFastestJsonCopy = require('fastest-json-copy').copy
+const plainObjectClone = require('plain-object-clone')
 const cloneDefaults = clone()
 const cloneProto = clone({proto: true})
 const cloneCircles = clone({circles: true})
@@ -34,6 +36,24 @@ var run = bench([
   function benchFastCopy (cb) {
     for (var i = 0; i < max; i++) {
       fastCopy(obj)
+    }
+    setImmediate(cb)
+  },
+  function benchFastestJsonCopy (cb) {
+    for (var i = 0; i < max; i++) {
+      copyFastestJsonCopy(obj);
+    }
+    setImmediate(cb)
+  },
+  function benchPlainObjectClone (cb) {
+    for (var i = 0; i < max; i++) {
+      plainObjectClone(obj);
+    }
+    setImmediate(cb)
+  },
+  function benchJsonParseJsonStringify (cb) {
+    for (var i = 0; i < max; i++) {
+      JSON.parse(JSON.stringify(obj))
     }
     setImmediate(cb)
   },
