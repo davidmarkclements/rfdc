@@ -103,17 +103,18 @@ npm run bench
 ```
 
 ```
-benchDeepCopy*100: 707.38ms
-benchLodashCloneDeep*100: 1.580s
-benchCloneDeep*100: 887.052ms
-benchFastCopy*100: 881.782ms
-benchFastestJsonCopy*100: 395.515ms // See note below
-benchPlainObjectClone*100: 580.939ms
-benchJsonParseJsonStringify*100: 2.800s // JSON.parse(JSON.stringify(obj))
-benchRfdc*100: 432.005ms
-benchRfdcProto*100: 429.112ms
-benchRfdcCircles*100: 473.169ms
-benchRfdcCirclesProto*100: 569.115ms
+benchDeepCopy*100: 715.561ms
+benchLodashCloneDeep*100: 1.590s
+benchCloneDeep*100: 869.809ms
+benchFastCopy*100: 849.658ms
+benchFastestJsonCopy*100: 409.315ms // See note below
+benchPlainObjectClone*100: 604.301ms
+benchNanoCopy*100: 795.848ms
+benchJsonParseJsonStringify*100: 2.433s // JSON.parse(JSON.stringify(obj))
+benchRfdc*100: 452.721ms
+benchRfdcProto*100: 426.996ms
+benchRfdcCircles*100: 494.482ms
+benchRfdcCirclesProto*100: 510.969ms
 ```
 
 It is true that [fastest-json-copy](https://www.npmjs.com/package/fastest-json-copy) may be faster, BUT it has such huge limitations that it is rarely useful. It treats things like `Date` and `Map` instances the same as empty `{}`. It can't handle circular references. [plain-object-clone](https://www.npmjs.com/package/plain-object-clone) is also really limited in capability.
