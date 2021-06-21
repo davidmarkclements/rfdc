@@ -42,19 +42,19 @@ var run = bench([
   },
   function benchFastestJsonCopy (cb) {
     for (var i = 0; i < max; i++) {
-      copyFastestJsonCopy(obj);
+      copyFastestJsonCopy(obj)
     }
     setImmediate(cb)
   },
   function benchPlainObjectClone (cb) {
     for (var i = 0; i < max; i++) {
-      plainObjectClone(obj);
+      plainObjectClone(obj)
     }
     setImmediate(cb)
   },
   function benchNanoCopy (cb) {
     for (var i = 0; i < max; i++) {
-      nanoCopy(obj);
+      nanoCopy(obj)
     }
     setImmediate(cb)
   },
