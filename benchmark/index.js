@@ -9,6 +9,7 @@ const clone = require('..')
 const copyFastestJsonCopy = require('fastest-json-copy').copy
 const plainObjectClone = require('plain-object-clone')
 const nanoCopy = require('nano-copy')
+const ramdaClone = require('ramda').clone
 const cloneDefaults = clone()
 const cloneProto = clone({proto: true})
 const cloneCircles = clone({circles: true})
@@ -55,6 +56,12 @@ var run = bench([
   function benchNanoCopy (cb) {
     for (var i = 0; i < max; i++) {
       nanoCopy(obj)
+    }
+    setImmediate(cb)
+  },
+  function benchRamdaClone (cb) {
+    for (var i = 0; i < max; i++) {
+      ramdaClone(obj)
     }
     setImmediate(cb)
   },
