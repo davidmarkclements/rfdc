@@ -49,7 +49,11 @@
     "deep-copy": "^1.4.2",
     "fast-copy": "^1.2.1",
     "fastbench": "^1.0.1",
+    "fastest-json-copy": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
+    "nano-copy": "^0.1.0",
+    "plain-object-clone": "^1.1.0",
+    "ramda": "^0.27.1",
     "standard": "^11.0.1",
     "tap": "^12.0.1",
     "tsd": "^0.7.4"
