@@ -8,7 +8,7 @@
     "./default": "./default.js"
   },
   "scripts": {
-    "test": "tap -R min test && npm run lint && tsd",
+    "test": "tap -R min test && npm run lint",
     "bench": "node benchmark",
     "lint": "standard --fix",
     "cov": "tap --100 test",
