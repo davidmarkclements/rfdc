@@ -4,8 +4,14 @@
   "description": "Really Fast Deep Clone",
   "main": "index.js",
   "exports": {
-    ".": "./index.js",
-    "./default": "./default.js"
+    ".": {
+      "require": "./index.js", 
+      "import": "./index.mjs" 
+    },
+    "./default":  {
+      "require": "./default.js", 
+      "import": "./default.mjs" 
+    }
   },
   "scripts": {
     "test": "tap -R min test && npm run lint",
