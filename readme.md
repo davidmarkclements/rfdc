@@ -145,6 +145,14 @@ All files |      100 |      100 |      100 |      100 |                   |
 ----------|----------|----------|----------|----------|-------------------|
 ```
 
+### `__proto__` own property copying
+
+`rfdc` works the same way as `Object.assign` when it comes to copying `['__proto__']` (e.g. when
+an object has an own property key called '__proto__'). It results in the target object 
+prototype object being set per the value of the `['__proto__']` own property.
+
+For detailed write-up on how a way to handle this security-wise see https://www.fastify.io/docs/latest/Guides/Prototype-Poisoning/.
+
 ## License
 
 MIT
