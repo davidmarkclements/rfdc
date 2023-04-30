@@ -7,6 +7,7 @@ const fastCopy = require('fast-copy').default
 const obj = require('./fixture.json')
 const clone = require('..')
 const copyFastestJsonCopy = require('fastest-json-copy').copy
+const jsondiffpatchClone = require('jsondiffpatch').clone
 const plainObjectClone = require('plain-object-clone')
 const nanoCopy = require('nano-copy')
 const ramdaClone = require('ramda').clone
@@ -44,6 +45,12 @@ var run = bench([
   function benchFastestJsonCopy (cb) {
     for (var i = 0; i < max; i++) {
       copyFastestJsonCopy(obj)
+    }
+    setImmediate(cb)
+  },
+  function benchJsondiffpatchClone (cb) {
+    for (var i = 0; i < max; i++) {
+      jsondiffpatchClone(obj)
     }
     setImmediate(cb)
   },
