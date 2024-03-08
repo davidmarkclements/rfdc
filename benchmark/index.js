@@ -94,7 +94,13 @@ var run = bench([
       cloneCirclesProto(obj)
     }
     setImmediate(cb)
-  }
+  },
+  function benchStructuredClose (cb) {
+    for (var i = 0; i < max; i++) {
+      structuredClone(obj)
+    }
+    setImmediate(cb)
+  },
 ], 100)
 
 run(run)
