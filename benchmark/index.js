@@ -95,7 +95,7 @@ var run = bench([
     }
     setImmediate(cb)
   },
-  function benchStructuredClose (cb) {
+  function benchStructuredClone (cb) {
     for (var i = 0; i < max; i++) {
       structuredClone(obj)
     }
