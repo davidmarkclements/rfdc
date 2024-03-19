@@ -223,7 +223,7 @@ function types (clone, label) {
   })
   test(`${label} copies TypedArrays from object correctly`, async ({ ok, is, isNot }) => {
     const [input1, input2] = [rnd(10), rnd(10)]
-    var buffer = new ArrayBuffer(8)
+    const buffer = new ArrayBuffer(8)
     const int32View = new Int32Array(buffer)
     int32View[0] = input1
     int32View[1] = input2
@@ -235,7 +235,7 @@ function types (clone, label) {
   })
   test(`${label} copies TypedArrays from array correctly`, async ({ ok, is, isNot }) => {
     const [input1, input2] = [rnd(10), rnd(10)]
-    var buffer = new ArrayBuffer(16)
+    const buffer = new ArrayBuffer(16)
     const int32View = new Int32Array(buffer)
     int32View[0] = input1
     int32View[1] = input2
@@ -247,7 +247,7 @@ function types (clone, label) {
   })
   test(`${label} copies complex TypedArrays`, async ({ ok, deepEqual, is, isNot }) => {
     const [input1, input2, input3] = [rnd(10), rnd(10), rnd(10)]
-    var buffer = new ArrayBuffer(4)
+    const buffer = new ArrayBuffer(4)
     const view1 = new Int8Array(buffer, 0, 2)
     const view2 = new Int8Array(buffer, 2, 2)
     const view3 = new Int8Array(buffer)

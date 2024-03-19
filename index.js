@@ -16,11 +16,11 @@ function rfdc (opts) {
   return opts.proto ? cloneProto : clone
 
   function cloneArray (a, fn) {
-    var keys = Object.keys(a)
-    var a2 = new Array(keys.length)
-    for (var i = 0; i < keys.length; i++) {
-      var k = keys[i]
-      var cur = a[k]
+    const keys = Object.keys(a)
+    const a2 = new Array(keys.length)
+    for (let i = 0; i < keys.length; i++) {
+      const k = keys[i]
+      const cur = a[k]
       if (typeof cur !== 'object' || cur === null) {
         a2[k] = cur
       } else if (cur instanceof Date) {
@@ -40,10 +40,10 @@ function rfdc (opts) {
     if (Array.isArray(o)) return cloneArray(o, clone)
     if (o instanceof Map) return new Map(cloneArray(Array.from(o), clone))
     if (o instanceof Set) return new Set(cloneArray(Array.from(o), clone))
-    var o2 = {}
-    for (var k in o) {
+    const o2 = {}
+    for (const k in o) {
       if (Object.hasOwnProperty.call(o, k) === false) continue
-      var cur = o[k]
+      const cur = o[k]
       if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
       } else if (cur instanceof Date) {
@@ -67,9 +67,9 @@ function rfdc (opts) {
     if (Array.isArray(o)) return cloneArray(o, cloneProto)
     if (o instanceof Map) return new Map(cloneArray(Array.from(o), cloneProto))
     if (o instanceof Set) return new Set(cloneArray(Array.from(o), cloneProto))
-    var o2 = {}
-    for (var k in o) {
-      var cur = o[k]
+    const o2 = {}
+    for (const k in o) {
+      const cur = o[k]
       if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
       } else if (cur instanceof Date) {
@@ -89,17 +89,17 @@ function rfdc (opts) {
 }
 
 function rfdcCircles (opts) {
-  var refs = []
-  var refsNew = []
+  const refs = []
+  const refsNew = []
 
   return opts.proto ? cloneProto : clone
 
   function cloneArray (a, fn) {
-    var keys = Object.keys(a)
-    var a2 = new Array(keys.length)
-    for (var i = 0; i < keys.length; i++) {
-      var k = keys[i]
-      var cur = a[k]
+    const keys = Object.keys(a)
+    const a2 = new Array(keys.length)
+    for (let i = 0; i < keys.length; i++) {
+      const k = keys[i]
+      const cur = a[k]
       if (typeof cur !== 'object' || cur === null) {
         a2[k] = cur
       } else if (cur instanceof Date) {
@@ -107,7 +107,7 @@ function rfdcCircles (opts) {
       } else if (ArrayBuffer.isView(cur)) {
         a2[k] = copyBuffer(cur)
       } else {
-        var index = refs.indexOf(cur)
+        const index = refs.indexOf(cur)
         if (index !== -1) {
           a2[k] = refsNew[index]
         } else {
@@ -124,12 +124,12 @@ function rfdcCircles (opts) {
     if (Array.isArray(o)) return cloneArray(o, clone)
     if (o instanceof Map) return new Map(cloneArray(Array.from(o), clone))
     if (o instanceof Set) return new Set(cloneArray(Array.from(o), clone))
-    var o2 = {}
+    const o2 = {}
     refs.push(o)
     refsNew.push(o2)
-    for (var k in o) {
+    for (const k in o) {
       if (Object.hasOwnProperty.call(o, k) === false) continue
-      var cur = o[k]
+      const cur = o[k]
       if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
       } else if (cur instanceof Date) {
@@ -141,7 +141,7 @@ function rfdcCircles (opts) {
       } else if (ArrayBuffer.isView(cur)) {
         o2[k] = copyBuffer(cur)
       } else {
-        var i = refs.indexOf(cur)
+        const i = refs.indexOf(cur)
         if (i !== -1) {
           o2[k] = refsNew[i]
         } else {
@@ -160,11 +160,11 @@ function rfdcCircles (opts) {
     if (Array.isArray(o)) return cloneArray(o, cloneProto)
     if (o instanceof Map) return new Map(cloneArray(Array.from(o), cloneProto))
     if (o instanceof Set) return new Set(cloneArray(Array.from(o), cloneProto))
-    var o2 = {}
+    const o2 = {}
     refs.push(o)
     refsNew.push(o2)
-    for (var k in o) {
-      var cur = o[k]
+    for (const k in o) {
+      const cur = o[k]
       if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
       } else if (cur instanceof Date) {
@@ -176,7 +176,7 @@ function rfdcCircles (opts) {
       } else if (ArrayBuffer.isView(cur)) {
         o2[k] = copyBuffer(cur)
       } else {
-        var i = refs.indexOf(cur)
+        const i = refs.indexOf(cur)
         if (i !== -1) {
           o2[k] = refsNew[i]
         } else {
