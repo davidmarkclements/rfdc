@@ -108,6 +108,24 @@ test('circles and proto option – deep circular array', async ({
   is(c.nest[2], c, 'circular references point to copied parent')
   isNot(c.nest[2], o, 'circular references do not point to original parent')
 })
+test('custom constructor handler', async ({ same, ok, isNot }) => {
+  class Foo {
+    constructor (s) {
+      this.s = s
+    }
+  }
+  const data = { foo: new Foo('foo') }
+  const cloned = rfdc({ constructorHandlers: [[Foo, (o) => new Foo(o.s)]] })(data)
+  ok(cloned.foo instanceof Foo)
+  same(cloned.foo.s, data.foo.s, 'same values')
+  isNot(cloned.foo, data.foo, 'different objects')
+})
+test('custom RegExp handler', async ({ same, ok, isNot }) => {
+  const data = { regex: /foo/ }
+  const cloned = rfdc({ constructorHandlers: [[RegExp, (o) => new RegExp(o)]] })(data)
+  isNot(cloned.regex, data.regex, 'different objects')
+  ok(cloned.regex.test('foo'))
+})
 
 function types (clone, label) {
   test(label + ' – number', async ({ is }) => {

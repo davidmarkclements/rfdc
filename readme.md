@@ -17,7 +17,7 @@ clone({a: 1, b: {c: 2}}) // => {a: 1, b: {c: 2}}
 
 ## API
 
-### `require('rfdc')(opts = { proto: false, circles: false }) => clone(obj) => obj2`
+### `require('rfdc')(opts = { proto: false, circles: false, constructorHandlers: [] }) => clone(obj) => obj2`
 
 #### `proto` option
 
@@ -47,6 +47,29 @@ Use the `circles` option to detect and preserve circular references in the
 object. If performance is important, try removing the circular reference from
 the object (set to `undefined`) and then add it back manually after cloning
 instead of using this option.
+
+#### `constructorHandlers` option
+
+Sometimes consumers may want to add custom clone behaviour for particular classes
+(for example `RegExp` or `ObjectId`, which aren't supported out-of-the-box).
+
+This can be done by passing `constructorHandlers`, which takes an array of tuples,
+where the first item is the class to match, and the second item is a function that
+takes the input and returns a cloned output:
+
+```js
+const clone = require('rfdc')({
+  constructorHandlers: [
+    [RegExp, (o) => new RegExp(o)],
+  ]
+})
+
+clone({r: /foo/}) // => {r: /foo/}
+```
+
+**NOTE**: For performance reasons, the handlers will only match an instance of the
+*exact* class (not a subclass). Subclasses will need to be added separately if they
+also need special clone behaviour.
 
 ### `default` import
 It is also possible to directly import the clone function with all options set
