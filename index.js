@@ -29,7 +29,7 @@ function rfdc (opts) {
       const cur = a[k]
       if (typeof cur !== 'object' || cur === null) {
         a2[k] = cur
-      } else if (constructorHandlers.has(cur.constructor)) {
+      } else if (cur.constructor !== Object && constructorHandlers.has(cur.constructor)) {
         a2[k] = constructorHandlers.get(cur.constructor)(cur, fn)
       } else if (ArrayBuffer.isView(cur)) {
         a2[k] = copyBuffer(cur)
@@ -43,7 +43,7 @@ function rfdc (opts) {
   function clone (o) {
     if (typeof o !== 'object' || o === null) return o
     if (Array.isArray(o)) return cloneArray(o, clone)
-    if (constructorHandlers.has(o.constructor)) {
+    if (o.constructor !== Object && constructorHandlers.has(o.constructor)) {
       return constructorHandlers.get(o.constructor)(o, clone)
     }
     const o2 = {}
@@ -52,7 +52,7 @@ function rfdc (opts) {
       const cur = o[k]
       if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
-      } else if (constructorHandlers.has(cur.constructor)) {
+      } else if (cur.constructor !== Object && constructorHandlers.has(cur.constructor)) {
         o2[k] = constructorHandlers.get(cur.constructor)(cur, clone)
       } else if (ArrayBuffer.isView(cur)) {
         o2[k] = copyBuffer(cur)
@@ -66,7 +66,7 @@ function rfdc (opts) {
   function cloneProto (o) {
     if (typeof o !== 'object' || o === null) return o
     if (Array.isArray(o)) return cloneArray(o, cloneProto)
-    if (constructorHandlers.has(o.constructor)) {
+    if (o.constructor !== Object && constructorHandlers.has(o.constructor)) {
       return constructorHandlers.get(o.constructor)(o, cloneProto)
     }
     const o2 = {}
@@ -74,7 +74,7 @@ function rfdc (opts) {
       const cur = o[k]
       if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
-      } else if (constructorHandlers.has(cur.constructor)) {
+      } else if (cur.constructor !== Object && constructorHandlers.has(cur.constructor)) {
         o2[k] = constructorHandlers.get(cur.constructor)(cur, cloneProto)
       } else if (ArrayBuffer.isView(cur)) {
         o2[k] = copyBuffer(cur)
@@ -106,7 +106,7 @@ function rfdcCircles (opts) {
       const cur = a[k]
       if (typeof cur !== 'object' || cur === null) {
         a2[k] = cur
-      } else if (constructorHandlers.has(cur.constructor)) {
+      } else if (cur.constructor !== Object && constructorHandlers.has(cur.constructor)) {
         a2[k] = constructorHandlers.get(cur.constructor)(cur, fn)
       } else if (ArrayBuffer.isView(cur)) {
         a2[k] = copyBuffer(cur)
@@ -125,7 +125,7 @@ function rfdcCircles (opts) {
   function clone (o) {
     if (typeof o !== 'object' || o === null) return o
     if (Array.isArray(o)) return cloneArray(o, clone)
-    if (constructorHandlers.has(o.constructor)) {
+    if (o.constructor !== Object && constructorHandlers.has(o.constructor)) {
       return constructorHandlers.get(o.constructor)(o, clone)
     }
     const o2 = {}
@@ -136,7 +136,7 @@ function rfdcCircles (opts) {
       const cur = o[k]
       if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
-      } else if (constructorHandlers.has(cur.constructor)) {
+      } else if (cur.constructor !== Object && constructorHandlers.has(cur.constructor)) {
         o2[k] = constructorHandlers.get(cur.constructor)(cur, clone)
       } else if (ArrayBuffer.isView(cur)) {
         o2[k] = copyBuffer(cur)
@@ -157,7 +157,7 @@ function rfdcCircles (opts) {
   function cloneProto (o) {
     if (typeof o !== 'object' || o === null) return o
     if (Array.isArray(o)) return cloneArray(o, cloneProto)
-    if (constructorHandlers.has(o.constructor)) {
+    if (o.constructor !== Object && constructorHandlers.has(o.constructor)) {
       return constructorHandlers.get(o.constructor)(o, cloneProto)
     }
     const o2 = {}
@@ -167,7 +167,7 @@ function rfdcCircles (opts) {
       const cur = o[k]
       if (typeof cur !== 'object' || cur === null) {
         o2[k] = cur
-      } else if (constructorHandlers.has(cur.constructor)) {
+      } else if (cur.constructor !== Object && constructorHandlers.has(cur.constructor)) {
         o2[k] = constructorHandlers.get(cur.constructor)(cur, cloneProto)
       } else if (ArrayBuffer.isView(cur)) {
         o2[k] = copyBuffer(cur)
