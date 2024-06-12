@@ -1,4 +1,7 @@
 'use strict'
+
+/* global structuredClone */
+
 const bench = require('fastbench')
 const deepCopy = require('deep-copy')
 const lodashCloneDeep = require('lodash.clonedeep')
