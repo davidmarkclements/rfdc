@@ -13,11 +13,15 @@ function rfdc (opts) {
   opts = opts || {}
   if (opts.circles) return rfdcCircles(opts)
 
-  const constructorHandlers = new Map([
-    [Date, (o) => new Date(o)],
-    [Map, (o, fn) => new Map(cloneArray(Array.from(o), fn))],
-    [Set, (o, fn) => new Set(cloneArray(Array.from(o), fn))]
-  ].concat(opts.constructorHandlers || []))
+  const constructorHandlers = new Map()
+  constructorHandlers.set(Date, (o) => new Date(o))
+  constructorHandlers.set(Map, (o, fn) => new Map(cloneArray(Array.from(o), fn)))
+  constructorHandlers.set(Set, (o, fn) => new Set(cloneArray(Array.from(o), fn)))
+  if (opts.constructorHandlers) {
+    for (const handler of opts.constructorHandlers) {
+      constructorHandlers.set(handler[0], handler[1])
+    }
+  }
 
   let handler = null
 
@@ -92,11 +96,15 @@ function rfdcCircles (opts) {
   const refs = []
   const refsNew = []
 
-  const constructorHandlers = new Map([
-    [Date, (o) => new Date(o)],
-    [Map, (o, fn) => new Map(cloneArray(Array.from(o), fn))],
-    [Set, (o, fn) => new Set(cloneArray(Array.from(o), fn))]
-  ].concat(opts.constructorHandlers || []))
+  const constructorHandlers = new Map()
+  constructorHandlers.set(Date, (o) => new Date(o))
+  constructorHandlers.set(Map, (o, fn) => new Map(cloneArray(Array.from(o), fn)))
+  constructorHandlers.set(Set, (o, fn) => new Set(cloneArray(Array.from(o), fn)))
+  if (opts.constructorHandlers) {
+    for (const handler of opts.constructorHandlers) {
+      constructorHandlers.set(handler[0], handler[1])
+    }
+  }
 
   let handler = null
   return opts.proto ? cloneProto : clone
