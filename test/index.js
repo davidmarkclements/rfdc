@@ -121,7 +121,7 @@ test('custom constructor handler', async ({ same, ok, isNot }) => {
   isNot(cloned.foo, data.foo, 'different objects')
 })
 test('custom RegExp handler', async ({ same, ok, isNot }) => {
-  const data = { regex: new RegExp('foo') }
+  const data = { regex: /foo/ }
   const cloned = rfdc({ constructorHandlers: [[RegExp, (o) => new RegExp(o)]] })(data)
   isNot(cloned.regex, data.regex, 'different objects')
   ok(cloned.regex.test('foo'))
