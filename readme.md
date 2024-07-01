@@ -7,7 +7,6 @@ Really Fast Deep Clone
 [![coverage](https://img.shields.io/codecov/c/github/davidmarkclements/rfdc.svg)](https://codecov.io/gh/davidmarkclements/rfdc)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
-
 ## Usage
 
 ```js
@@ -171,10 +170,15 @@ All files |      100 |      100 |      100 |      100 |                   |
 ### `__proto__` own property copying
 
 `rfdc` works the same way as `Object.assign` when it comes to copying `['__proto__']` (e.g. when
-an object has an own property key called '__proto__'). It results in the target object 
+an object has an own property key called '__proto__'). It results in the target object
 prototype object being set per the value of the `['__proto__']` own property.
 
 For detailed write-up on how a way to handle this security-wise see https://www.fastify.io/docs/latest/Guides/Prototype-Poisoning/.
+
+## Security
+
+Like `Object.assign()`, rdfc does not offer any protection against prototype poisoning. In other terms,
+if you clone an object that has a `__proto__` property, the target object will have the prototype set.
 
 ## License
 
