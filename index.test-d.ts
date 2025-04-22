@@ -1,5 +1,5 @@
 import { expectType } from 'tsd';
-import rfdc = require('.');
+import rfdc = require('./index.js');
 
 const clone = rfdc();
 
