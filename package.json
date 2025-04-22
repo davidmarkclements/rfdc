@@ -3,6 +3,7 @@
   "version": "1.4.1",
   "description": "Really Fast Deep Clone",
   "main": "index.js",
+  "type": "commonjs",
   "exports": {
     ".": "./index.js",
     "./default": "./default.js"
