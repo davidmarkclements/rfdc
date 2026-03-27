@@ -120,6 +120,27 @@ test('custom constructor handler', async ({ same, ok, isNot }) => {
   same(cloned.foo.s, data.foo.s, 'same values')
   isNot(cloned.foo, data.foo, 'different objects')
 })
+test('custom constructor handler - circular objects', async ({ same, ok, is, isNot }) => {
+  class Foo {
+    constructor (s) {
+      this.s = s
+    }
+  }
+  const a = { foo: new Foo('foo1') }
+  const b = { foo: new Foo('foo2') }
+  a.other = b
+  b.other = a
+  const data = { a, b }
+  const cloned = rfdc({ circles: true, constructorHandlers: [[Foo, (o) => new Foo(o.s)]] })(data)
+  ok(cloned.a.foo instanceof Foo)
+  ok(cloned.b.foo instanceof Foo)
+  same(cloned.a.foo.s, data.a.foo.s, 'same values')
+  same(cloned.b.foo.s, data.b.foo.s, 'same values')
+  isNot(cloned.a.foo, data.a.foo, 'different objects')
+  isNot(cloned.b.foo, data.b.foo, 'different objects')
+  is(cloned.a.other, cloned.b, 'same objects')
+  is(cloned.b.other, cloned.a, 'same objects')
+})
 test('custom RegExp handler', async ({ same, ok, isNot }) => {
   const data = { regex: /foo/ }
   const cloned = rfdc({ constructorHandlers: [[RegExp, (o) => new RegExp(o)]] })(data)
