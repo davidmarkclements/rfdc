@@ -125,22 +125,27 @@ npm run bench
 ```
 
 ```
-benchDeepCopy*100: 671.675ms
-benchLodashCloneDeep*100: 1.574s
-benchCloneDeep*100: 936.792ms
-benchFastCopy*100: 822.668ms
-benchFastestJsonCopy*100: 363.898ms // See note below
-benchPlainObjectClone*100: 556.635ms
-benchNanoCopy*100: 770.234ms
-benchRamdaClone*100: 2.695s
-benchJsonParseJsonStringify*100: 2.290s // JSON.parse(JSON.stringify(obj))
-benchRfdc*100: 412.818ms
-benchRfdcProto*100: 424.076ms
-benchRfdcCircles*100: 443.357ms
-benchRfdcCirclesProto*100: 465.053ms
+benchDeepCopy*100: 550.406ms
+benchLodashCloneDeep*100: 1.479s
+benchCloneDeep*100: 761.46ms
+benchFastCopy*100: 800.38ms
+benchFastestJsonCopy*100: 369.979ms // See note below
+benchJsondiffpatchClone*100: 285.914ms // See note below
+benchPlainObjectClone*100: 544ms
+benchNanoCopy*100: 640.636ms
+benchRamdaClone*100: 2.936s
+benchJsonParseJsonStringify*100: 2.239s // JSON.parse(JSON.stringify(obj))
+benchRfdc*100: 403.151ms
+benchRfdcProto*100: 416.896ms
+benchRfdcCircles*100: 453.706ms
+benchRfdcCirclesProto*100: 404.127ms
 ```
 
-It is true that [fastest-json-copy](https://www.npmjs.com/package/fastest-json-copy) may be faster, BUT it has such huge limitations that it is rarely useful. For example, it treats things like `Date` and `Map` instances the same as empty `{}`. It can't handle circular references. [plain-object-clone](https://www.npmjs.com/package/plain-object-clone) is also really limited in capability.
+It is true that `jsondiffpatch.clone()` from [jsondiffpatch](https://www.npmjs.com/package/jsondiffpatch) is the fastest in that benchmark run, but it cannot handle as many situations as `rfdc` can. Also, [this](https://www.measurethat.net/Benchmarks/ShowResult/202870) and [this benchmark result](https://www.measurethat.net/Benchmarks/ShowResult/202871) suggest that `rfdc` is faster in Firefox and Chrome at [this different benchmark](https://www.measurethat.net/Benchmarks/Show/13538/3/lodash-clonedeep-vs-jsonparsejsonstringify-vs-fastest-j).
+
+It is true that [fastest-json-copy](https://www.npmjs.com/package/fastest-json-copy) is faster than `rfdc` in this particular benchmark, but we have seen that, [with different input](benchmark/fixture2.json), the opposite is true. Also, fastest-json-copy has such huge limitations that it is rarely useful. For example, it treats things like `Date` and `Map` instances the same as empty `{}`. It can't handle circular references.
+
+[plain-object-clone](https://www.npmjs.com/package/plain-object-clone) is also really limited in capability.
 
 ## Tests
 
