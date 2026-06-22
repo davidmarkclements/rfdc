@@ -167,6 +167,15 @@ function types (clone, label) {
     same(clone(o), o, 'same values')
     isNot(clone(o), o, 'different arrays')
   })
+  test(label + ' – array with additional properties', async ({ same, isNot, is }) => {
+    const o = [1]
+    o.foo = 'bar'
+    const c = clone(o)
+    same(c, o, 'same values')
+    isNot(c, o, 'different arrays')
+    is(c.length, 1, 'length is preserved (no extra empty item)')
+    is(c.foo, 'bar', 'additional property is copied')
+  })
   test(label + ' – deep object', async ({ same, isNot }) => {
     const o = { nest: { a: 1, b: 2 } }
     same(clone(o), o, 'same values')
