@@ -6,6 +6,11 @@ function copyBuffer (cur) {
     return Buffer.from(cur)
   }
 
+  // A DataView takes a byte length, not an element count like a TypedArray.
+  if (cur instanceof DataView) {
+    return new DataView(cur.buffer.slice(), cur.byteOffset, cur.byteLength)
+  }
+
   return new cur.constructor(cur.buffer.slice(), cur.byteOffset, cur.length)
 }
 

@@ -283,6 +283,33 @@ function types (clone, label) {
     deepEqual(Array.from(cloned.view2), [input2, input3], 'cloned value content is correct')
     deepEqual(Array.from(cloned.view3), [input1, 0, input2, input3], 'cloned value content is correct')
   })
+  test(`${label} copies a DataView over the full buffer correctly`, async ({ ok, is, isNot }) => {
+    const input = rnd(1000)
+    const buffer = new ArrayBuffer(8)
+    const view = new DataView(buffer)
+    view.setInt32(0, input)
+    const cloned = clone({ a: view }).a
+    ok(cloned instanceof DataView, 'cloned value is instance of DataView')
+    isNot(cloned, view, 'cloned value is not same as input value')
+    is(cloned.byteOffset, view.byteOffset, 'byteOffset preserved')
+    is(cloned.byteLength, view.byteLength, 'byteLength preserved')
+    is(cloned.getInt32(0), input, 'cloned value content is correct')
+  })
+  test(`${label} copies a partial DataView correctly`, async ({ ok, is, isNot }) => {
+    const input = rnd(100)
+    const buffer = new ArrayBuffer(16)
+    const view = new DataView(buffer, 4, 8) // offset 4, length 8 of a 16-byte buffer
+    view.setInt32(0, input)
+    const cloned = clone({ a: view }).a
+    ok(cloned instanceof DataView, 'cloned value is instance of DataView')
+    isNot(cloned, view, 'cloned value is not same as input value')
+    is(cloned.byteOffset, view.byteOffset, 'byteOffset preserved')
+    is(cloned.byteLength, view.byteLength, 'byteLength preserved')
+    is(cloned.getInt32(0), input, 'cloned value content is correct')
+    // Mutating the source must not affect the clone.
+    view.setInt32(0, input + 1)
+    is(cloned.getInt32(0), input, 'clone is independent of the source')
+  })
   test(`${label} - maps`, async ({ same, isNot }) => {
     const map = new Map([['a', 1]])
     same(Array.from(clone(map)), [['a', 1]], 'same value')
