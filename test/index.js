@@ -1,6 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
+const { runInNewContext } = require('vm')
 const rfdc = require('..')
 const cloneDefault = require('../default')
 const clone = rfdc()
@@ -126,6 +127,15 @@ test('custom RegExp handler', async ({ same, ok, isNot }) => {
   isNot(cloned.regex, data.regex, 'different objects')
   ok(cloned.regex.test('foo'))
 })
+test('custom TypedArray handler takes precedence for root values', async ({ same }) => {
+  for (const options of [{}, { proto: true }, { circles: true }, { circles: true, proto: true }]) {
+    const clone = rfdc({
+      ...options,
+      constructorHandlers: [[Uint8Array, (o) => ({ values: Array.from(o) })]]
+    })
+    same(clone(new Uint8Array([1, 2])), { values: [1, 2] }, 'custom handler is used')
+  }
+})
 
 function types (clone, label) {
   test(label + ' – number', async ({ is }) => {
@@ -231,6 +241,17 @@ function types (clone, label) {
     isNot(clonedBuffer, inputBuffer, 'cloned buffer is not same as input buffer')
     is(clonedBuffer.toString(), input, 'cloned buffer content is correct')
   })
+  test(`${label} copies a root buffer correctly`, async ({ ok, is, isNot, same }) => {
+    const inputBuffer = Buffer.from([0, 1, 2, 3]).subarray(1, 3)
+    const clonedBuffer = clone(inputBuffer)
+    ok(Buffer.isBuffer(clonedBuffer), 'cloned value is buffer')
+    isNot(clonedBuffer, inputBuffer, 'cloned buffer is a different object')
+    same(Array.from(clonedBuffer), [1, 2], 'cloned buffer contains only the input slice')
+    inputBuffer[0] = 9
+    is(clonedBuffer[0], 1, 'source writes do not change the clone')
+    clonedBuffer[1] = 8
+    is(inputBuffer[1], 2, 'clone writes do not change the source')
+  })
   test(`${label} copies buffers from arrays correctly`, async ({ ok, is, isNot }) => {
     const input = Date.now().toString(36)
     const inputBuffer = Buffer.from(input)
@@ -250,6 +271,29 @@ function types (clone, label) {
     isNot(cloned, int32View, 'cloned value is not same as input value')
     is(cloned[0], input1, 'cloned value content is correct')
     is(cloned[1], input2, 'cloned value content is correct')
+  })
+  test(`${label} copies a root TypedArray correctly`, async ({ ok, is, isNot, same }) => {
+    const buffer = new ArrayBuffer(12)
+    const view = new Uint16Array(buffer, 2, 3)
+    view.set([1, 256, 3])
+    const cloned = clone(view)
+    ok(cloned instanceof Uint16Array, 'cloned value has the same TypedArray type')
+    isNot(cloned, view, 'cloned view is a different object')
+    isNot(cloned.buffer, buffer, 'cloned view has independent storage')
+    is(cloned.byteOffset, view.byteOffset, 'byte offset is preserved')
+    is(cloned.byteLength, view.byteLength, 'byte length is preserved')
+    same(Array.from(cloned), [1, 256, 3], 'cloned view content is correct')
+    view[0] = 9
+    is(cloned[0], 1, 'source writes do not change the clone')
+    cloned[1] = 8
+    is(view[1], 256, 'clone writes do not change the source')
+  })
+  test(`${label} preserves root DataView handling`, async ({ same }) => {
+    const buffer = new ArrayBuffer(16)
+    same(clone(new DataView(buffer)), {}, 'full DataView retains unsupported type behavior')
+    same(clone(new DataView(buffer, 4, 8)), {}, 'partial DataView retains unsupported type behavior')
+    const view = runInNewContext('new DataView(new ArrayBuffer(16), 4, 8)')
+    same(clone(view), {}, 'DataView from another realm retains unsupported type behavior')
   })
   test(`${label} copies TypedArrays from array correctly`, async ({ ok, is, isNot }) => {
     const [input1, input2] = [rnd(10), rnd(10)]
