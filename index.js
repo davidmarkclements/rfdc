@@ -52,6 +52,7 @@ function rfdc (opts) {
     if (o.constructor !== Object && (handler = constructorHandlers.get(o.constructor))) {
       return handler(o, clone)
     }
+    if (ArrayBuffer.isView(o) && typeof o.length === 'number') return copyBuffer(o)
     const o2 = {}
     for (const k in o) {
       if (Object.hasOwnProperty.call(o, k) === false) continue
@@ -75,6 +76,7 @@ function rfdc (opts) {
     if (o.constructor !== Object && (handler = constructorHandlers.get(o.constructor))) {
       return handler(o, cloneProto)
     }
+    if (ArrayBuffer.isView(o) && typeof o.length === 'number') return copyBuffer(o)
     const o2 = {}
     for (const k in o) {
       const cur = o[k]
@@ -139,6 +141,7 @@ function rfdcCircles (opts) {
     if (o.constructor !== Object && (handler = constructorHandlers.get(o.constructor))) {
       return handler(o, clone)
     }
+    if (ArrayBuffer.isView(o) && typeof o.length === 'number') return copyBuffer(o)
     const o2 = {}
     refs.push(o)
     refsNew.push(o2)
@@ -171,6 +174,7 @@ function rfdcCircles (opts) {
     if (o.constructor !== Object && (handler = constructorHandlers.get(o.constructor))) {
       return handler(o, cloneProto)
     }
+    if (ArrayBuffer.isView(o) && typeof o.length === 'number') return copyBuffer(o)
     const o2 = {}
     refs.push(o)
     refsNew.push(o2)
