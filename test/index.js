@@ -108,6 +108,46 @@ test('circles and proto option – deep circular array', async ({
   is(c.nest[2], c, 'circular references point to copied parent')
   isNot(c.nest[2], o, 'circular references do not point to original parent')
 })
+test('circles option - self-referential array', async ({ is, isNot }) => {
+  for (const clone of [cloneCircles, cloneCirclesProto]) {
+    const array = [1]
+    array.push(array)
+    const result = clone(array)
+    isNot(result, array, 'different array')
+    is(result[0], 1, 'same value')
+    is(result[1], result, 'cycle points to cloned array')
+  }
+})
+
+test('circles option - cycle between arrays', async ({ is, isNot }) => {
+  for (const clone of [cloneCircles, cloneCirclesProto]) {
+    const first = []
+    const second = [first]
+    first.push(second)
+    const result = clone(first)
+    isNot(result, first, 'different outer array')
+    isNot(result[0], second, 'different nested array')
+    is(result[0][0], result, 'cycle points to cloned outer array')
+  }
+})
+
+test('circles option - circular array with a custom constructor handler', async ({ is, ok }) => {
+  class Foo {
+    constructor (value) {
+      this.value = value
+    }
+  }
+  for (const proto of [false, true]) {
+    const clone = rfdc({ circles: true, proto, constructorHandlers: [[Foo, o => new Foo(o.value)]] })
+    const array = [new Foo('foo')]
+    array.push(array)
+    const result = clone(array)
+    ok(result[0] instanceof Foo, 'custom class preserved')
+    is(result[0].value, 'foo', 'custom value preserved')
+    is(result[1], result, 'cycle points to cloned array')
+  }
+})
+
 test('custom constructor handler', async ({ same, ok, isNot }) => {
   class Foo {
     constructor (s) {
