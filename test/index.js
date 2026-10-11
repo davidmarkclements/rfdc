@@ -1,6 +1,8 @@
 'use strict'
 
 const { test } = require('tap')
+const { readFileSync } = require('fs')
+const { runInNewContext } = require('vm')
 const rfdc = require('..')
 const cloneDefault = require('../default')
 const clone = rfdc()
@@ -9,6 +11,19 @@ const cloneCircles = rfdc({ circles: true })
 const cloneCirclesProto = rfdc({ circles: true, proto: true })
 
 const rnd = (max) => Math.round(Math.random() * max)
+
+test('typed arrays without a Buffer global', async ({ same, isNot }) => {
+  const source = readFileSync(require.resolve('..'), 'utf8')
+  const browserRfdc = runInNewContext(source + '\nmodule.exports', { module: {} })
+  for (const opts of [{}, { proto: true }, { circles: true }, { proto: true, circles: true }]) {
+    const clone = browserRfdc(opts)
+    const input = new Uint8Array([1, 2, 3])
+    for (const output of [clone({ input }).input, clone([input])[0]]) {
+      same(Array.from(output), Array.from(input), 'typed array contents preserved')
+      isNot(output.buffer, input.buffer, 'typed array storage cloned')
+    }
+  }
+})
 
 types(clone, 'default')
 types(cloneProto, 'proto option')

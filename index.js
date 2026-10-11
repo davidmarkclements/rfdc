@@ -2,7 +2,7 @@
 module.exports = rfdc
 
 function copyBuffer (cur) {
-  if (cur instanceof Buffer) {
+  if (typeof Buffer !== 'undefined' && cur instanceof Buffer) {
     return Buffer.from(cur)
   }
 
